@@ -352,3 +352,8 @@ GOOD LUCK 😀
 // );
 // console.log(withdrawals);
 // console.log(latestLargeMovements);
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mover) => acc + mover, 0);
+console.log(overallBalance);
