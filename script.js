@@ -352,8 +352,83 @@ GOOD LUCK 😀
 // );
 // console.log(withdrawals);
 // console.log(latestLargeMovements);
-const overallBalance = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .reduce((acc, mover) => acc + mover, 0);
-console.log(overallBalance);
+// const overallBalance = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .reduce((acc, mover) => acc + mover, 0);
+// console.log(overallBalance);
+
+const breeds = [
+  {
+    breed: 'German Shepherd',
+    averageWeight: 32,
+    activities: ['fetch', 'swimming'],
+  },
+  {
+    breed: 'Dalmatian',
+    averageWeight: 24,
+    activities: ['running', 'fetch', 'agility'],
+  },
+  {
+    breed: 'Labrador',
+    averageWeight: 28,
+    activities: ['fetch', 'swimming'],
+  },
+  {
+    breed: 'Beagle',
+    averageWeight: 12,
+    activities: ['digging', 'fetch'],
+  },
+  {
+    breed: 'Husky',
+    averageWeight: 26,
+    activities: ['running', 'agility', 'swimming'],
+  },
+  {
+    breed: 'Bulldog',
+    averageWeight: 36,
+    activities: ['sleeping'],
+  },
+  {
+    breed: 'Poodle',
+    averageWeight: 18,
+    activities: ['agility', 'fetch'],
+  },
+];
+// Task 1
+const huskyWeight = breeds.find(dogs => dogs.breed === 'Husky').averageWeight;
+console.log(huskyWeight);
+// Task 2
+const dogBothActivities = breeds.find(
+  dogs =>
+    dogs.activities.includes('running') && dogs.activities.includes('fetch'),
+);
+console.log(dogBothActivities);
+
+// Task 3
+const allActivities = breeds.flatMap(dogs => dogs.activities);
+console.log(allActivities);
+
+// Task 4
+const uniqueActivities = [...new Set(breeds.flatMap(dogs => dogs.activities))];
+console.log(uniqueActivities);
+
+// Task 5
+const swimmingAdjacent = breeds
+  .filter(dog => dog.activities.includes('swimming'))
+  .flatMap(dog => dog.activities.filter(activity => activity !== 'swimming'));
+console.log(swimmingAdjacent);
+
+// Task 6
+const averageWeight = breeds.map(dog => dog.averageWeight > 10);
+console.log(averageWeight);
+
+// Task 7
+const activeDogs = breeds.map(dog => dog.activities.length > 2);
+console.log(activeDogs);
+
+// Bonus
+const heaviestFetchDog = breeds
+  .filter(dog => dog.activities.includes('fetch') && dog.activities.length > 1)
+  .reduce((max, dog) => (dog.averageWeight > max.averageWeight ? dog : max));
+console.log(heaviestFetchDog);
