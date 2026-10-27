@@ -63,9 +63,10 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
 
-const displayMovement = function (movements) {
+const displayMovement = function (movements, sort = false) {
   containerMovements.innerHTML = '';
-  movements.forEach(function (move, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  movs.forEach(function (move, i) {
     const type = move > 0 ? 'deposit' : 'withdrawal';
     const html = `
       <div class="movements__row">
@@ -203,6 +204,13 @@ btnClose.addEventListener('click', function (e) {
 
   // console.log('hello world');
 });
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovement(currentAccount.movements, !sorted);
+  sorted = !sorted;
+});
+
 /////////////////////////////////////////////////
 // LECTURES
 
@@ -414,21 +422,26 @@ const uniqueActivities = [...new Set(breeds.flatMap(dogs => dogs.activities))];
 console.log(uniqueActivities);
 
 // Task 5
-const swimmingAdjacent = breeds
-  .filter(dog => dog.activities.includes('swimming'))
-  .flatMap(dog => dog.activities.filter(activity => activity !== 'swimming'));
+const swimmingAdjacent = [
+  ...new Set(
+    breeds
+      .filter(dog => dog.activities.includes('swimming'))
+      .flatMap(dog => dog.activities),
+  ),
+];
 console.log(swimmingAdjacent);
 
 // Task 6
-const averageWeight = breeds.map(dog => dog.averageWeight > 10);
-console.log(averageWeight);
+console.log(breeds.every(dog => dog.averageWeight > 10));
 
 // Task 7
 const activeDogs = breeds.map(dog => dog.activities.length > 2);
 console.log(activeDogs);
 
 // Bonus
-const heaviestFetchDog = breeds
-  .filter(dog => dog.activities.includes('fetch') && dog.activities.length > 1)
-  .reduce((max, dog) => (dog.averageWeight > max.averageWeight ? dog : max));
-console.log(heaviestFetchDog);
+const fetchWeights = breeds
+  .filter(dog => dog.activities.includes('fetch'))
+  .map(dog => dog.averageWeight);
+const heaviest = Math.max(...fetchWeights);
+console.log(fetchWeights);
+console.log(heaviest);
